@@ -5,11 +5,26 @@
 [![License](https://img.shields.io/cocoapods/l/JMImageScanning.svg?style=flat)](http://cocoapods.org/pods/JMImageScanning)
 [![Platform](https://img.shields.io/cocoapods/p/JMImageScanning.svg?style=flat)](http://cocoapods.org/pods/JMImageScanning)
 
-## Usage
+## The idea
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+I have a targeted keyboard to analyse. 
 
-## Requirements
+![Image](./images/free.png)
+
+I know all the pieces of the keyboard.
+
+![Image](./images/free-0.png)
+![Image](./images/free-1.png)
+![Image](./images/free-2.png)
+![Image](./images/free-3.png)
+![Image](./images/free-4.png)
+![Image](./images/free-5.png)
+![Image](./images/free-6.png)
+![Image](./images/free-7.png)
+![Image](./images/free-8.png)
+![Image](./images/free-9.png)
+
+I am running pixel scanning on the targeted keyboard for each pieces.
 
 ## Installation
 
