@@ -10,19 +10,16 @@
 Pod::Spec.new do |s|
   s.name             = "JMImageScanning"
   s.version          = "0.1.0"
-  s.summary          = "A short description of JMImageScanning."
+  s.summary          = "Basic ocr recognition to hack secure keyboards."
   s.description      = <<-DESC
-                       An optional longer description of JMImageScanning
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       Basic ocr recognition to hack secure keyboards
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/JMImageScanning"
+  s.homepage         = "https://github.com/leverdeterre/JMImageScanning"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "Jerome Morissard" => "jerome.morissard@backelite.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/JMImageScanning.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { "Jerome Morissard" => "morissardj@gmail.com" }
+  s.source           = { :git => "https://github.com/leverdeterre/JMImageScanning.git", :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/leverdeterre'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
