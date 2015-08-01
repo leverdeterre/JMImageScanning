@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.version          = "0.1.0"
   s.summary          = "Basic ocr recognition to hack secure keyboards."
   s.description      = <<-DESC
-                       Basic ocr recognition to hack secure keyboards
+                       UIImage pixel analysis to find sub components of images.
                        DESC
   s.homepage         = "https://github.com/leverdeterre/JMImageScanning"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
