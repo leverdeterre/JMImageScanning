@@ -27,8 +27,7 @@
 I am running pixel scanning on the targeted keyboard for each pieces.
 
 ####results 
-![Image](./images/demo.png =300x200)
-
+<img src="./images/demo.png" alt="demo" style="width:200px;"/>
 
 ## Installation
 
