@@ -35,6 +35,12 @@ it, simply add the following line to your Podfile:
 pod "JMImageScanning"
 ```
 
+```objc
+UIImage *keyboardImage = [UIImage imageNamed:@"free.png"];
+UIImage *image = [UIImage @"free-0.png"];
+NSArray *points = [keyboardImage findPositionsOfSubImage:image];
+```
+
 ## Author
 
 Jerome Morissard, morissardj@gmail.com
