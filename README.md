@@ -26,8 +26,8 @@ I know all the pieces of the keyboard.
 
 I am running pixel scanning on the targeted keyboard for each pieces.
 
-results 
-<img src="./images/demo.png" alt="demo" style="width:200px;"/>
+## The result :)
+![Image](./images/demo.png)
 
 ## Installation
 
