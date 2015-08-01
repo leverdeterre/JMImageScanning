@@ -7,11 +7,11 @@
 
 ## The idea
 
-I have a targeted keyboard to analyse. 
+###I have a targeted keyboard to analyse. 
 
 ![Image](./images/free.png)
 
-I know all the pieces of the keyboard.
+###I know all the pieces of the keyboard.
 
 ![Image](./images/free-0.png)
 ![Image](./images/free-1.png)
@@ -25,6 +25,10 @@ I know all the pieces of the keyboard.
 ![Image](./images/free-9.png)
 
 I am running pixel scanning on the targeted keyboard for each pieces.
+
+###results 
+![Image](./images/demo.png)
+
 
 ## Installation
 
