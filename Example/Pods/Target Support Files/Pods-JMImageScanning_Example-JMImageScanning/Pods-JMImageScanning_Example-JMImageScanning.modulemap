@@ -1,0 +1,6 @@
+framework module JMImageScanning {
+  umbrella header "Pods-JMImageScanning_Example-JMImageScanning-umbrella.h"
+
+  export *
+  module * { export * }
+}

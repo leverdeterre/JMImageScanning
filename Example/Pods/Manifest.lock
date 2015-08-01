@@ -1,0 +1,24 @@
+PODS:
+  - FBSnapshotTestCase (2.0.3):
+    - FBSnapshotTestCase/SwiftSupport (= 2.0.3)
+  - FBSnapshotTestCase/Core (2.0.3)
+  - FBSnapshotTestCase/SwiftSupport (2.0.3):
+    - FBSnapshotTestCase/Core
+  - JMImageScanning (0.1.0)
+  - Kiwi (2.3.1)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - JMImageScanning (from `../`)
+  - Kiwi
+
+EXTERNAL SOURCES:
+  JMImageScanning:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: d0eeca6bf87958e088b254396ae66873f971cfb1
+  JMImageScanning: aee270f7f5bc51214b31265555d50b27474d9a2a
+  Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
+
+COCOAPODS: 0.37.2

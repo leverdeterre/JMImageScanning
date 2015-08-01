@@ -1,0 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'JMImageScanning_Example', :exclusive => true do
+  pod "JMImageScanning", :path => "../"
+end
+
+target 'JMImageScanning_Tests', :exclusive => true do
+  pod "JMImageScanning", :path => "../"
+
+  pod 'Kiwi'
+  pod 'FBSnapshotTestCase'
+end
