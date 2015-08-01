@@ -14,6 +14,11 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
 
 - (NSArray *)findPositionsOfSubImage:(UIImage *)subImage treshold:(float)treshold error:(NSError **)error
 {
+    return [self findPositionsOfSubImage:subImage treshold:treshold breakOnFirst:NO error:error];
+}
+
+- (NSArray *)findPositionsOfSubImage:(UIImage *)subImage treshold:(float)treshold breakOnFirst:(BOOL)breakOnFirst error:(NSError **)error
+{
     CGImageRef cgimage = subImage.CGImage;
     size_t width  = CGImageGetWidth(cgimage);
     size_t height = CGImageGetHeight(cgimage);
@@ -81,8 +86,10 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
             
             if (sumOffPixelSimilarities > (height * width)*treshold) {
                 [positions addObject:[NSValue valueWithCGPoint:CGPointMake(col, row)]];
+                if (breakOnFirst) {
+                    return positions;
+                }
             }
-            
         }
     }
     
@@ -101,7 +108,7 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
 
 - (CGPoint)findFirstPositionOfSubImage:(UIImage *)subImage treshold:(float)treshold error:(NSError **)error
 {
-    NSValue *value = [self findPositionsOfSubImage:subImage treshold:treshold error:error].firstObject;
+    NSValue *value = [self findPositionsOfSubImage:subImage treshold:treshold breakOnFirst:YES error:error].firstObject;
     return [value CGPointValue];
 }
 

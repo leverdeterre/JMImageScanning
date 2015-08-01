@@ -54,17 +54,14 @@
     
     for (NSString *imageName in images) {
         UIImage *image = [UIImage imageNamed:imageName];
-        NSArray *points = [bigImage findPositionsOfSubImage:image];
-        for (NSValue *value in points) {
-            CGPoint p = value.CGPointValue;
-            NSLog(@"%@ %@",imageName, NSStringFromCGPoint(p));
-            UIImageView *subImageView = [[UIImageView alloc] initWithImage:image];
-            CGRect subImageViewFrame = subImageView.frame;
-            subImageViewFrame.origin.x = p.x;
-            subImageViewFrame.origin.y = p.y;
-            subImageView.frame = subImageViewFrame;
-            [scannedResultImageView addSubview:subImageView];
-        }
+        CGPoint p = [bigImage findFirstPositionOfSubImage:image];
+        NSLog(@"%@ %@",imageName, NSStringFromCGPoint(p));
+        UIImageView *subImageView = [[UIImageView alloc] initWithImage:image];
+        CGRect subImageViewFrame = subImageView.frame;
+        subImageViewFrame.origin.x = p.x;
+        subImageViewFrame.origin.y = p.y;
+        subImageView.frame = subImageViewFrame;
+        [scannedResultImageView addSubview:subImageView];
     }
 }
 
