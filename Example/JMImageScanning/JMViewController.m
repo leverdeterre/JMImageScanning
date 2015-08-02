@@ -10,7 +10,7 @@
 
 @import JMImageScanning;
 @interface JMViewController ()
-
+@property (strong) UIImageView *scannedResultImageView;
 @end
 
 @implementation JMViewController
@@ -34,35 +34,47 @@
     topImageView.frame = topImageViewFrame;
     [self.view addSubview:topImageView];
     
-    UIImageView *scannedResultImageView = [[UIImageView alloc] initWithFrame:topImageView.frame];
-    CGRect bottomImageViewFrame = scannedResultImageView.frame;
+    self.scannedResultImageView = [[UIImageView alloc] initWithFrame:topImageView.frame];
+    CGRect bottomImageViewFrame = self.scannedResultImageView.frame;
     bottomImageViewFrame.origin.x = 0.5 * (CGRectGetWidth(self.view.frame) - CGRectGetWidth(topImageViewFrame));
     bottomImageViewFrame.origin.y = CGRectGetMaxY(topImageView.frame) + 20.0f;
-    scannedResultImageView.frame = bottomImageViewFrame;
-    [self.view addSubview:scannedResultImageView];
-
-    NSArray *images = @[@"free-0.png",
-                        @"free-1.png",
-                        @"free-2.png",
-                        @"free-3.png",
-                        @"free-4.png",
-                        @"free-5.png",
-                        @"free-6.png",
-                        @"free-7.png",
-                        @"free-8.png",
-                        @"free-9.png"];
+    self.scannedResultImageView.frame = bottomImageViewFrame;
+    [self.view addSubview:self.scannedResultImageView];
     
-    for (NSString *imageName in images) {
-        UIImage *image = [UIImage imageNamed:imageName];
-        CGPoint p = [bigImage findFirstPositionOfSubImage:image];
-        NSLog(@"%@ %@",imageName, NSStringFromCGPoint(p));
-        UIImageView *subImageView = [[UIImageView alloc] initWithImage:image];
-        CGRect subImageViewFrame = subImageView.frame;
-        subImageViewFrame.origin.x = p.x;
-        subImageViewFrame.origin.y = p.y;
-        subImageView.frame = subImageViewFrame;
-        [scannedResultImageView addSubview:subImageView];
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *images = @[@"free-0.png",
+                            @"free-1.png",
+                            @"free-2.png",
+                            @"free-3.png",
+                            @"free-4.png",
+                            @"free-5.png",
+                            @"free-6.png",
+                            @"free-7.png",
+                            @"free-8.png",
+                            @"free-9.png"];
+        
+        for (NSString *imageName in images) {
+            UIImage *image = [UIImage imageNamed:imageName];
+            
+            NSError *error;
+            CGPoint p = [bigImage findFirstPositionOfSubImage:image treshold:0.70f error:&error];
+            NSLog(@"%@ %@",imageName, NSStringFromCGPoint(p));
+            
+#warning For demo effect on simulator :)
+            sleep(1);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *subImageView = [[UIImageView alloc] initWithImage:image];
+                CGRect subImageViewFrame = subImageView.frame;
+                subImageViewFrame.origin.x = p.x;
+                subImageViewFrame.origin.y = p.y;
+                subImageView.frame = subImageViewFrame;
+                [self.scannedResultImageView addSubview:subImageView];
+            });
+
+      
+        }
+    });
 }
 
 @end

@@ -42,6 +42,9 @@ pod "JMImageScanning"
 UIImage *keyboardImage = [UIImage imageNamed:@"free.png"];
 UIImage *image = [UIImage @"free-0.png"];
 NSArray *points = [keyboardImage findPositionsOfSubImage:image];
+
+NSError *error;
+CGPoint p = [keyboardImage findFirstPositionOfSubImage:image treshold:0.70f error:&error];
 ```
 
 ## Author

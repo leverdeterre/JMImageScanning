@@ -8,7 +8,7 @@
 
 #import "UIImage+JMImageScanning.h"
 
-static float const JMImageScanningDefaultTreshold = 0.85f;
+static float const JMImageScanningDefaultTreshold = 0.70f;
 
 @implementation UIImage (JMImageScanning)
 
@@ -51,6 +51,14 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
         }
     }
     
+    if (self.scale != subImage.scale) {
+        NSLog(@"Scanning impossible because images are not at the same scale");
+        if (error) {
+            *error = [NSError errorWithDomain:JMImageScanningErrorDomain code:JMImageScanningNotTheSameScaleError userInfo:nil];
+            return nil;
+        }
+    }
+    
     //Load image data
     CGDataProviderRef provider = CGImageGetDataProvider(cgimage);
     NSData* data = (id)CFBridgingRelease(CGDataProviderCopyData(provider));
@@ -64,9 +72,10 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
     NSMutableArray *positions = [NSMutableArray new];
     for(size_t row = 0; row < (bigbheight - height); row++) {
         for(size_t col = 0; col < (bigwidth - width); col++) {
-            CGFloat sumOffPixelSimilarities = 0.0f;
-            for(size_t subrow = 0; subrow < height -1; subrow++) {
-                for(size_t subcol = 0; subcol < width -1; subcol++) {
+            float sumOffPixelSimilarities = 0.0f;
+            BOOL stop = NO;
+            for(size_t subrow = 0; !stop && subrow < height -1; subrow++) {
+                for(size_t subcol = 0; !stop && subcol < width -1; subcol++) {
                     const uint8_t* pixelInBigImage = &bigBytes[(row+subrow) * bigbpr + (col+subcol) * bigbytes_per_pixel];
                     const uint8_t* pixelInSubImage = &bytes[subrow * bpr + subcol * bytes_per_pixel];
                     
@@ -79,8 +88,11 @@ static float const JMImageScanningDefaultTreshold = 0.85f;
                     float g2 = pixelInSubImage[2*bytes_per_pixel];
                     float b2 = pixelInSubImage[3*bytes_per_pixel];
                     float a2 = pixelInSubImage[4*bytes_per_pixel];
-                    CGFloat diff = 0.25 * fabs(r/255-r2/255) + fabs(g/255-g2/255) + fabs(b/255-b2/255) + fabs(a/255-a2/255);
-                    sumOffPixelSimilarities = sumOffPixelSimilarities + (1 - diff);
+                    float pixelDiff = 0.25 * fabs(r/255-r2/255) + fabs(g/255-g2/255) + fabs(b/255-b2/255) + fabs(a/255-a2/255);
+                    if (pixelDiff > (1 - treshold)) {
+                        stop = YES;
+                    }
+                    sumOffPixelSimilarities = sumOffPixelSimilarities + (1 - pixelDiff);
                 }
             }
             

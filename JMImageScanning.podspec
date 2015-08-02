@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "JMImageScanning"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "Basic ocr recognition to hack secure keyboards."
   s.description      = <<-DESC
                        UIImage pixel analysis to find sub components of images.
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/leverdeterre/JMImageScanning.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/leverdeterre'
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '5.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
