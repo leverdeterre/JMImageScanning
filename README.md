@@ -1,3 +1,7 @@
+## My other works
+
+[http://leverdeterre.github.io] (http://leverdeterre.github.io)
+
 # JMImageScanning
 
 [![CI Status](http://img.shields.io/travis/Jerome Morissard/JMImageScanning.svg?style=flat)](https://travis-ci.org/Jerome Morissard/JMImageScanning)
