@@ -9,9 +9,14 @@
 [![License](https://img.shields.io/cocoapods/l/JMImageScanning.svg?style=flat)](http://cocoapods.org/pods/JMImageScanning)
 [![Platform](https://img.shields.io/cocoapods/p/JMImageScanning.svg?style=flat)](http://cocoapods.org/pods/JMImageScanning)
 
-## The idea
 
-I have a targeted keyboard to analyse. 
+## What is it for ?
+Scanning image to find sub image, like a CIDetector but to detect targeted images.
+
+## Really? but what is it for ?
+I'm working on a lot of Bank applications and in order to execute functional testing i fix the constraint of logging on real testing accounts (protected by secure keyboard) using this library.
+
+The idea, i have a targeted keyboard to analyse. 
 
 ![Image](./images/free.png)
 
