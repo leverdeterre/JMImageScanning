@@ -16,11 +16,11 @@ Scanning image to find sub image, like a CIDetector but to detect targeted image
 ## Really? but what is it for ?
 I'm working on a lot of Bank applications and in order to execute functional testing i fix the constraint of logging on real testing accounts (protected by secure keyboard) using this library.
 
-The idea, i have a targeted keyboard to analyse. 
+The idea, i have a master image (here, a secure keyboard to analyse). 
 
 ![Image](./images/free.png)
 
-I know all the pieces of the keyboard.
+I want to find a sub image (here, all the pieces of the keyboard).
 
 ![Image](./images/free-0.png)
 ![Image](./images/free-1.png)
@@ -55,6 +55,11 @@ NSArray *points = [keyboardImage findPositionsOfSubImage:image];
 NSError *error;
 CGPoint p = [keyboardImage findFirstPositionOfSubImage:image treshold:0.70f error:&error];
 ```
+
+## TODO
+[ ] increase performance on device
+[ ] support heterogeneous scales
+
 
 ## Author
 
