@@ -7,6 +7,7 @@
 //
 
 #import "JMViewController.h"
+#include <sys/time.h>
 
 @import JMImageScanning;
 @interface JMViewController ()
@@ -53,6 +54,10 @@
                             @"free-8.png",
                             @"free-9.png"];
         
+        struct timeval time;
+        gettimeofday(&time, NULL);
+        long startMillis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+        
         for (NSString *imageName in images) {
             UIImage *image = [UIImage imageNamed:imageName];
             
@@ -60,8 +65,8 @@
             CGPoint p = [bigImage findFirstPositionOfSubImage:image treshold:0.70f error:&error];
             NSLog(@"%@ %@",imageName, NSStringFromCGPoint(p));
             
-#warning For demo effect on simulator :)
-            sleep(1);
+//#warning For demo effect on simulator :)
+//            sleep(1);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIImageView *subImageView = [[UIImageView alloc] initWithImage:image];
@@ -74,6 +79,10 @@
 
       
         }
+        
+        gettimeofday(&time, NULL);
+        long endMillis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+        NSLog(@"end in %ld ms", endMillis - startMillis);
     });
 }
 
