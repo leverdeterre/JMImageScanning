@@ -57,8 +57,16 @@ CGPoint p = [keyboardImage findFirstPositionOfSubImage:image treshold:0.70f erro
 ```
 
 ## TODO
-- [ ] increase performance on device
+- [x] increase performance on device (V0.2 increase 42% of performance)
 - [ ] support heterogeneous scales
+
+## Performances
+iPhone 5 (iOS8.4), 100 run
+
+|  Version  | search time (ms) | 
+| ------------- |:-------------:| 
+|  V0.1  | 620ms | 
+|  V0.2  | 359ms | 
 
 
 ## Author
