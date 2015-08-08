@@ -68,17 +68,18 @@ static float const JMImageScanningDefaultTreshold = 0.70f;
     NSData* bigdData = (id)CFBridgingRelease(CGDataProviderCopyData(bigProvider));
     const uint8_t* bigBytes = [bigdData bytes];
     
-    //Parcours
+    //Analysis
     size_t min = MIN(width, height);
-    float r, g, b ,a ,r2 ,g2,b2, a2,pixelDiff;
+    CGFloat r,g,b,a,r2,g2,b2,a2,pixelDiff;
+    CGFloat maxPixelsDifferences = (1 - treshold) * 255;
     
     NSMutableArray *positions = [NSMutableArray new];
     for(size_t row = 0; row < (bigbheight - height); row++) {
         for(size_t col = 0; col < (bigwidth - width); col++) {
-            float sumOffPixelSimilarities = 0.0f;
+            float sumOffPixelDifferences = 0.0f;
             BOOL stop = NO;
             
-            //FastPath
+            //FastPath, a diagonal path
             for(size_t subrow = 0; !stop && subrow < min -1; subrow++) {
                 for(size_t subcol = subrow; !stop && subcol < min -1; subcol++) {
                     const uint8_t* pixelInBigImage = &bigBytes[(row+subrow) * bigbpr + (col+subcol) * bigbytes_per_pixel];
@@ -93,8 +94,8 @@ static float const JMImageScanningDefaultTreshold = 0.70f;
                     g2 = pixelInSubImage[2*bytes_per_pixel];
                     b2 = pixelInSubImage[3*bytes_per_pixel];
                     a2 = pixelInSubImage[4*bytes_per_pixel];
-                    pixelDiff = 0.25 * fabs(r/255-r2/255) + fabs(g/255-g2/255) + fabs(b/255-b2/255) + fabs(a/255-a2/255);
-                    if (pixelDiff > (1 - treshold)) {
+                    pixelDiff = fabs(r-r2) + fabs(g-g2) + fabs(b-b2) + fabs(a-a2);
+                    if (pixelDiff > maxPixelsDifferences) {
                         stop = YES;
                     }
                 }
@@ -115,15 +116,15 @@ static float const JMImageScanningDefaultTreshold = 0.70f;
                     g2 = pixelInSubImage[2*bytes_per_pixel];
                     b2 = pixelInSubImage[3*bytes_per_pixel];
                     a2 = pixelInSubImage[4*bytes_per_pixel];
-                    pixelDiff = 0.25 * fabs(r/255-r2/255) + fabs(g/255-g2/255) + fabs(b/255-b2/255) + fabs(a/255-a2/255);
-                    if (pixelDiff > (1 - treshold)) {
+                    pixelDiff = fabs(r-r2) + fabs(g-g2) + fabs(b-b2) + fabs(a-a2);
+                    if (pixelDiff > maxPixelsDifferences) {
                         stop = YES;
                     }
-                    sumOffPixelSimilarities = sumOffPixelSimilarities + (1 - pixelDiff);
+                    sumOffPixelDifferences = sumOffPixelDifferences + pixelDiff;
                 }
             }
             
-            if (sumOffPixelSimilarities > (height * width)*treshold) {
+            if (stop == NO) {
                 [positions addObject:[NSValue valueWithCGPoint:CGPointMake(col, row)]];
                 if (breakOnFirst) {
                     return positions;
