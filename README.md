@@ -58,6 +58,7 @@ CGPoint p = [keyboardImage findFirstPositionOfSubImage:image treshold:0.70f erro
 
 ## TODO
 - [x] increase performance on device (V0.2 increase 42% of performance)
+- [x] increase performance on device (V0.3 increase 130% of performance)
 - [ ] support heterogeneous scales
 
 ## Performances
