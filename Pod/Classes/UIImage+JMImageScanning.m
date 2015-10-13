@@ -80,8 +80,11 @@ static float const JMImageScanningDefaultTreshold = 0.70f;
             BOOL stop = NO;
             
             //FastPath, a diagonal path
-            for(size_t subrow = 0; !stop && subrow < min -1; subrow++) {
-                for(size_t subcol = subrow; !stop && subcol < min -1; subcol++) {
+            for(size_t subrow = 0; !stop && subrow < min -1; subrow+=2) {
+                if (stop) {
+                    break;
+                }
+                for(size_t subcol = subrow; !stop && subcol < min -1; subcol+=2) {
                     const uint8_t* pixelInBigImage = &bigBytes[(row+subrow) * bigbpr + (col+subcol) * bigbytes_per_pixel];
                     const uint8_t* pixelInSubImage = &bytes[subrow * bpr + subcol * bytes_per_pixel];
                     
@@ -97,35 +100,41 @@ static float const JMImageScanningDefaultTreshold = 0.70f;
                     pixelDiff = fabs(r-r2) + fabs(g-g2) + fabs(b-b2) + fabs(a-a2);
                     if (pixelDiff > maxPixelsDifferences) {
                         stop = YES;
+                        break;
                     }
                 }
             }
             
-            //LargePath
-            for(size_t subrow = 0; !stop && subrow < height -1; subrow++) {
-                for(size_t subcol = 0; !stop && subcol < width -1; subcol++) {
-                    const uint8_t* pixelInBigImage = &bigBytes[(row+subrow) * bigbpr + (col+subcol) * bigbytes_per_pixel];
-                    const uint8_t* pixelInSubImage = &bytes[subrow * bpr + subcol * bytes_per_pixel];
-                    
-                    r = pixelInBigImage[bytes_per_pixel];
-                    g = pixelInBigImage[2*bytes_per_pixel];
-                    b = pixelInBigImage[3*bytes_per_pixel];
-                    a = pixelInBigImage[4*bytes_per_pixel];
-                    
-                    r2 = pixelInSubImage[bytes_per_pixel];
-                    g2 = pixelInSubImage[2*bytes_per_pixel];
-                    b2 = pixelInSubImage[3*bytes_per_pixel];
-                    a2 = pixelInSubImage[4*bytes_per_pixel];
-                    pixelDiff = fabs(r-r2) + fabs(g-g2) + fabs(b-b2) + fabs(a-a2);
-                    if (pixelDiff > maxPixelsDifferences) {
-                        stop = YES;
+            
+            if (!stop) {
+                //LargePath
+                for(size_t subrow = 0; !stop && subrow < height - 1; subrow+=1) {
+                    for(size_t subcol = 0; !stop && subcol < width - 1 ; subcol+=1) {
+                        const uint8_t* pixelInBigImage = &bigBytes[(row+subrow) * bigbpr + (col+subcol) * bigbytes_per_pixel];
+                        const uint8_t* pixelInSubImage = &bytes[subrow * bpr + subcol * bytes_per_pixel];
+                        
+                        r = pixelInBigImage[bytes_per_pixel];
+                        g = pixelInBigImage[2*bytes_per_pixel];
+                        b = pixelInBigImage[3*bytes_per_pixel];
+                        a = pixelInBigImage[4*bytes_per_pixel];
+                        
+                        r2 = pixelInSubImage[bytes_per_pixel];
+                        g2 = pixelInSubImage[2*bytes_per_pixel];
+                        b2 = pixelInSubImage[3*bytes_per_pixel];
+                        a2 = pixelInSubImage[4*bytes_per_pixel];
+                        pixelDiff = fabs(r-r2) + fabs(g-g2) + fabs(b-b2) + fabs(a-a2);
+                        if (pixelDiff > maxPixelsDifferences) {
+                            stop = YES;
+                            break;
+                        }
+                        sumOffPixelDifferences = sumOffPixelDifferences + pixelDiff;
                     }
-                    sumOffPixelDifferences = sumOffPixelDifferences + pixelDiff;
                 }
             }
             
             if (stop == NO) {
-                [positions addObject:[NSValue valueWithCGPoint:CGPointMake(col, row)]];
+                CGPoint point = CGPointMake(col, row);
+                [positions addObject:[NSValue valueWithCGPoint:point]];
                 if (breakOnFirst) {
                     return positions;
                 }
